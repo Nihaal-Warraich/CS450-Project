@@ -8,10 +8,6 @@ This repository contains the CS450 course project: a visualization dashboard imp
 
 ## Getting Started
 
-Prerequisites:
-
-- Install [Node.js (LTS)](https://nodejs.org/) which includes `npm`.
-- Optional: use `yarn` if preferred.
 
 Clone and run the project locally:
 

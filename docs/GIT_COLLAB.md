@@ -34,7 +34,11 @@ Replace `sp1` with the story point number and use a short kebab-case description
 2. Work on the story point
 
 	 - Make small, focused commits with clear messages. Prefix messages with the story point ID:
-
+        ```powershell
+		 git add .
+		 git commit -m "SP1: Added Age Bar Graph"
+		 ```
+        or
 		 ```powershell
 		 git add <files>
 		 git commit -m "SP1: Added Age Bar Graph"
@@ -53,34 +57,73 @@ Replace `sp1` with the story point number and use a short kebab-case description
 	 - PR description should include:
 		 - Story Point number and short summary.
 		 - What changed (high-level).
-		 - How to test (setup steps, commands, sample inputs).
 		 - Screenshots or gif for UI changes (if applicable).
-		 - Any known limitations or follow-up tasks.
-	 - Add reviewers from the team and assign appropriate labels (e.g., `story-point`, `frontend`, `backend`).
 
-5. Keep branch up-to-date and address review comments
 
-	 - If `main` advanced while you were working, rebase to keep history clean:
+5. Keep branch up-to-date (PSA: only need to do this if main was updated and shared files were updated that can result in merge conflict otherwise no need)
 
-		 ```powershell
-		 git fetch origin
-		 git rebase origin/main
-		 # resolve conflicts if any, then
-		 git push --force-with-lease
-		 ```
+- Why rebase: rebasing applies your branch's commits on top of the latest `main` so the history is linear and easier to review. Rebasing is preferred for small feature/story branches that haven't been shared widely.
+- When to rebase: do this when `origin/main` has new commits that you want to include before opening/updating a PR or when reviewers ask you to bring your branch up-to-date.
 
-	 - Alternatively, merge `main` into your branch if the team prefers merges over rebases:
+Detailed rebase steps (safe, step-by-step)
 
-		 ```powershell
-		 git fetch origin
-		 git merge origin/main
-		 git push
-		 ```
+1. Fetch the latest remote refs:
+
+	 ```powershell
+	 git fetch origin
+	 ```
+
+2. Make sure you're on your feature branch (not `main`):
+
+	 ```powershell
+	 git checkout feature/sp<#>-short-desc
+	 ```
+
+3. Rebase your branch onto the updated `origin/main`:
+
+	 ```powershell
+	 git rebase origin/main
+	 ```
+
+	 - Git will replay your commits onto the tip of `origin/main`.
+
+Handling conflicts during rebase
+
+- If there is a conflict, Git will pause and mark files with conflicts. Use `git status` to see conflicted files.
+- Open the conflicted files, resolve the conflicts, then:
+
+	```powershell
+	git add <resolved-file>
+	git rebase --continue
+	```
+
+- If you make a mistake and want to stop the rebase and return to the pre-rebase state:
+
+	```powershell
+	git rebase --abort
+	```
+
+Pushing after a rebase (force safely)
+
+- Because rebase rewrites history, you must update the remote branch with a force push. Use `--force-with-lease` (safer than `--force`):
+
+	```powershell
+	git push --force-with-lease
+	```
+
+- `--force-with-lease` fails if someone else pushed to the same remote branch since your last fetch, preventing accidental overwrites.
+
+
+Warnings and best practices
+
+- Avoid rebasing public/shared branches that others are using. If your branch has already been merged or shared widely, prefer merging `main` into your branch or using a revert instead of rewriting history.
+- Always run your test/lint steps locally after a rebase to ensure nothing regressed.
+- Commit or stash local work before rebasing. If you have uncommitted changes you want to keep, use `git stash` before rebasing and `git stash pop` afterwards.
+
 
 6. Merge strategy
 
-	 - Use **Squash and merge** for story point branches to keep the `main` history concise, unless the team decides otherwise.
-	 - Ensure CI checks (if any) pass and that reviewers have approved before merging.
+	 - Use **Squash and merge** for story point branches to keep the `main` history concise.
 
 7. Cleanup after merge
 
