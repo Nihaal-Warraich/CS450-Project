@@ -2,6 +2,31 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Project Overview
+
+This repository contains the CS450 course project: a visualization dashboard implemented using React JS and d3. The codebase includes the application source in `src/`, a production `build/` output, static assets in `public/`, and documentation in `docs/` (including `docs/GIT_COLLAB.md` which describes the team's branching and PR workflow).
+
+## Getting Started
+
+Prerequisites:
+
+- Install [Node.js (LTS)](https://nodejs.org/) which includes `npm`.
+- Optional: use `yarn` if preferred.
+
+Clone and run the project locally:
+
+```powershell
+git clone https://github.com/Nihaal-Warraich/CS450-Project.git
+cd CS450-Project
+npm install
+npm start
+```
+
+Notes:
+
+- The app will open at `http://localhost:3000` by default.
+- See `docs/GIT_COLLAB.md` for branch naming, PR, and fix/branch guidelines.
+
 ## Available Scripts
 
 In the project directory, you can run:
