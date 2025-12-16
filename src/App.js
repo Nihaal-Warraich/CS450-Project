@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <header className="dashboard-header">
-        <h1>Interactive Data Dashboard</h1>
+        <h1>Sleep Health and Life Style Dataset Dashboard</h1>
         <p>Explore insights revealed by each visualization below.</p>
       </header>
 
@@ -32,7 +32,7 @@ function App() {
         </section>
 
         <section className="story-section">
-          <h2>Story Point 4</h2>
+          <h2>BMI & Clinical Disorders</h2>
           <StoryPoint4 />
         </section>
 
