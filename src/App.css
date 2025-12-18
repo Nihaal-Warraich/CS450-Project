@@ -1,38 +1,152 @@
-.App {
+/* Reset & Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header Styling */
+.dashboard-header {
+  background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+  color: white;
+  padding: 2.5rem 1rem;
   text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.dashboard-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Main Container */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 3rem; /* Increased gap for better separation */
+}
+
+/* Story Card */
+.story-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  /* FIX 1: Removed overflow: hidden so tooltips don't get clipped */
+  display: grid;
+  /* Desktop: 350px for text, rest for chart. minmax ensures chart area doesn't get squished to 0 */
+  grid-template-columns: 350px minmax(0, 1fr); 
+  align-items: stretch; /* Stretch to make sure borders go all the way down */
+  border: 1px solid #e1e4e8;
+}
+
+/* Text Section */
+.story-text {
+  padding: 2.5rem;
+  background-color: #ffffff;
+  border-right: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.story-text h2 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #4ca1af;
+  padding-bottom: 0.5rem;
+  display: inline-block;
+  width: fit-content;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.story-text p {
+  margin-bottom: 1rem;
+  color: #555;
+  font-size: 1rem;
+}
+
+.insight-tip {
+  background-color: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #0d47a1;
+  margin-top: 1rem;
+}
+
+/* Chart Container */
+.viz-container {
+  padding: 1rem;
+  display: flex;
+  
+  /* FIX: Changed from 'center' to 'flex-start' to prevent left-side clipping */
+  justify-content: flex-start; 
+  align-items: center;
+  
+  background-color: #fafafa;
+  min-height: 500px;
+  
+  /* Critical for preventing cut-off */
+  overflow: auto; 
+  position: relative; 
+}
+
+/* FIX: This centers the chart when it fits, but allows scrolling when it doesn't */
+.viz-container > * {
+  margin: auto;
+}
+
+/* Footer */
+.dashboard-footer {
+  text-align: center;
+  padding: 3rem 1rem;
+  margin-top: 2rem;
+  color: #888;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 900px) {
+  .story-card {
+    /* Stack text on top of chart */
+    grid-template-columns: 1fr;
   }
-  to {
-    transform: rotate(360deg);
+
+  .story-text {
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding: 1.5rem;
+  }
+  
+  .viz-container {
+    padding: 1rem;
+    display: block; /* Allows easier scrolling on mobile */
+    text-align: center;
+    overflow-x: auto; /* Horizontal scrollbar for wide charts */
+  }
+  
+  /* Ensure SVGs inside don't shrink weirdly */
+  .viz-container svg {
+    max-width: none; /* Let the SVG be its full size so it doesn't distort */
+    margin: 0 auto;
   }
 }
