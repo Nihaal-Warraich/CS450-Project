@@ -22,7 +22,7 @@ function App() {
         </section>
 
         <section className="story-section">
-          <h2>Story Point 2</h2>
+          <h2>Stress Levels vs. Sleep Duration</h2>
           <StoryPoint2 />
         </section>
 
