@@ -1,6 +1,7 @@
+import React from "react";
 import "./App.css";
 
-// Import each story point component
+// Import your existing Story Point components
 import StoryPoint1 from "./story_points/StoryPoint1";
 import StoryPoint2 from "./story_points/StoryPoint2";
 import StoryPoint3 from "./story_points/StoryPoint3";
@@ -10,33 +11,76 @@ function App() {
   return (
     <div className="App">
       <header className="dashboard-header">
-        <h1>Sleep Health and Life Style Dataset Dashboard</h1>
-        <p>Explore insights revealed by each visualization below.</p>
+        <div className="header-content">
+          <h1>Sleep Health Dashboard</h1>
+          <p>Analyzing the link between Mental Health, Lifestyle Decisions, and Sleep Disorders.</p>
+        </div>
       </header>
 
       <main className="dashboard-container">
         
-        <section className="story-section">
-          <h2>Story Point 1</h2>
-          <StoryPoint1 />
+        {/* Story Point 1 */}
+        <section className="story-card">
+          <div className="story-text">
+            <h2>1. The Sleep Landscape</h2>
+            <p>
+              We begin by mapping the baseline. Do people who rate their sleep highly actually sleep longer? 
+              And where do disorders like <strong>Insomnia</strong> and <strong>Apnea</strong> appear?
+            </p>
+          </div>
+          <div className="viz-container">
+            {/* Component loads its own data */}
+            <StoryPoint1 />
+          </div>
         </section>
 
-        <section className="story-section">
-          <h2>Stress Levels vs. Sleep Duration</h2>
-          <StoryPoint2 />
+        {/* Story Point 2 */}
+        <section className="story-card">
+          <div className="story-text">
+            <h2>2. The Mental Factor: Stress</h2>
+            <p>
+              Stress is often cited as the #1 sleep killer. Here we track how sleep duration effects 
+              self-reported stress levels rise from 1 to 10.
+            </p>
+          </div>
+          <div className="viz-container">
+            <StoryPoint2 />
+          </div>
         </section>
 
-        <section className="story-section">
-          <h2>Story Point 3</h2>
-          <StoryPoint3 />
+        {/* Story Point 3 */}
+        <section className="story-card">
+          <div className="story-text">
+            <h2>3. The Environmental Factor: Career</h2>
+            <p>
+              This Treemap reveals which industries are the most sleep-deprived.
+              Size represents the number of people, and color represents sleep quality.
+            </p>
+          </div>
+          <div className="viz-container">
+            <StoryPoint3 />
+          </div>
         </section>
 
-        <section className="story-section">
-          <h2>BMI & Clinical Disorders</h2>
-          <StoryPoint4 />
+        {/* Story Point 4 */}
+        <section className="story-card">
+          <div className="story-text">
+            <h2>4. The Physical Factor: BMI</h2>
+            <p>
+              Finally, we look at the physical body. This Sunburst chart breaks down 
+              BMI categories (Inner Ring) into specific disorders (Outer Ring).
+            </p>
+          </div>
+          <div className="viz-container">
+            <StoryPoint4 />
+          </div>
         </section>
 
       </main>
+
+      <footer className="dashboard-footer">
+        <p>Sleep Health & Lifestyle Dataset Analysis</p>
+      </footer>
     </div>
   );
 }
