@@ -1,7 +1,5 @@
-import React from "react";
 import "./App.css";
 
-// Import your existing Story Point components
 import StoryPoint1 from "./story_points/StoryPoint1";
 import StoryPoint2 from "./story_points/StoryPoint2";
 import StoryPoint3 from "./story_points/StoryPoint3";
@@ -19,7 +17,6 @@ function App() {
 
       <main className="dashboard-container">
         
-        {/* Story Point 1 */}
         <section className="story-card">
           <div className="story-text">
             <h2>1. The Sleep Landscape</h2>
@@ -29,12 +26,11 @@ function App() {
             </p>
           </div>
           <div className="viz-container">
-            {/* Component loads its own data */}
             <StoryPoint1 />
           </div>
         </section>
 
-        {/* Story Point 2 */}
+        
         <section className="story-card">
           <div className="story-text">
             <h2>2. The Mental Factor: Stress</h2>
@@ -48,7 +44,7 @@ function App() {
           </div>
         </section>
 
-        {/* Story Point 3 */}
+        
         <section className="story-card">
           <div className="story-text">
             <h2>3. The Environmental Factor: Career</h2>
@@ -62,7 +58,7 @@ function App() {
           </div>
         </section>
 
-        {/* Story Point 4 */}
+        
         <section className="story-card">
           <div className="story-text">
             <h2>4. The Physical Factor: BMI</h2>
