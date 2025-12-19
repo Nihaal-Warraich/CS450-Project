@@ -59,7 +59,6 @@ class StoryPoint3 extends Component {
 
       const count = ids.length > 0 ? new Set(ids).size : people.length;
 
-      // ✅ FIXED column names
       const sleepVals = people
         .map((p) => this.toNum(p["Quality of Sleep"]))
         .filter((x) => x !== null);
@@ -90,7 +89,7 @@ class StoryPoint3 extends Component {
       name: "Occupations",
       children: occStats.map((d) => ({
         name: d.name,
-        value: d.count, // ✅ use "value"
+        value: d.count,
         A_sleep: d.A_sleep,
         A_stress: d.A_stress,
       })),
@@ -112,11 +111,18 @@ class StoryPoint3 extends Component {
 
     treemap(root);
 
-    // ✅ Stable rubric domain (1–10)
     const color = d3
-      .scaleLinear()
-      .domain([1, 10])
-      .range(["#C8E6C9", "#1B5E20"]);
+      .scaleThreshold()
+      .domain([5.5, 6.5, 7.0, 7.5, 8.0, 8.5])
+      .range([
+        "#edf8e9", // <= 5.5
+        "#c7e9c0", // 5.5–6.5
+        "#a1d99b", // 6.5–7.0
+        "#74c476", // 7.0–7.5
+        "#41ab5d", // 7.5–8.0
+        "#238b45", // 8.0–8.5
+        "#005a32", // > 8.5
+      ]);
 
     const svgEl = this.svgRef.current;
     const svg = d3.select(svgEl);
@@ -224,9 +230,9 @@ class StoryPoint3 extends Component {
           <label style={{ fontWeight: "bold" }}>
             Min size sample:
             <select
-              value={minSampleSize} // ✅ FIX
+              value={minSampleSize}
               onChange={(e) =>
-                this.setState({ minSampleSize: Number(e.target.value) }) // ✅ FIX
+                this.setState({ minSampleSize: Number(e.target.value) })
               }
               style={{ marginLeft: "8px", padding: "6px" }}
             >
