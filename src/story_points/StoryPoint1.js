@@ -33,7 +33,7 @@ class StoryPoint1 extends Component {
 
     const width = 720;
     const height = 450;
-    const margin = { top: 80, right: 100, bottom: 90, left: 100 };
+    const margin = { top: 110, right: 100, bottom: 90, left: 100 };
 
     const data = rawData.map(d => ({
       quality: +d["Quality of Sleep"],
@@ -102,7 +102,6 @@ class StoryPoint1 extends Component {
       .attr("text-anchor", "middle")
       .attr("font-size", "14px")
       .attr("font-weight", "bold")
-      .attr("fill", "#222")
       .text("Quality of Sleep Score (1–10)");
 
     svg.append("text")
@@ -112,7 +111,6 @@ class StoryPoint1 extends Component {
       .attr("text-anchor", "middle")
       .attr("font-size", "14px")
       .attr("font-weight", "bold")
-      .attr("fill", "#222")
       .text("Number of Individuals");
 
     svg.append("text")
@@ -122,7 +120,6 @@ class StoryPoint1 extends Component {
       .attr("text-anchor", "middle")
       .attr("font-size", "14px")
       .attr("font-weight", "bold")
-      .attr("fill", "#222")
       .text("Average Sleep Duration (Hours)");
 
     const stack = d3.stack().keys(disorders);
@@ -139,21 +136,7 @@ class StoryPoint1 extends Component {
       .attr("x", d => x(d.data.quality))
       .attr("y", d => yBars(d[1]))
       .attr("height", d => yBars(d[0]) - yBars(d[1]))
-      .attr("width", x.bandwidth())
-      .on("mouseover", (event, d) => {
-        const disorder = event.currentTarget.parentNode.__data__.key;
-        this.setState({
-          tooltip: {
-            visible: true,
-            text: `${d.data[disorder]} ${disorder} patients`,
-            x: event.pageX,
-            y: event.pageY
-          }
-        });
-      })
-      .on("mouseout", () => {
-        this.setState({ tooltip: { ...this.state.tooltip, visible: false } });
-      });
+      .attr("width", x.bandwidth());
 
     if (this.state.showLine) {
       const line = d3.line()
@@ -174,24 +157,51 @@ class StoryPoint1 extends Component {
         .attr("cx", d => x(d.quality) + x.bandwidth() / 2)
         .attr("cy", d => yLine(d.avgDuration))
         .attr("r", 4)
-        .on("mouseover", (event, d) => {
-          this.setState({
-            tooltip: {
-              visible: true,
-              text: `Avg Sleep: ${d.avgDuration.toFixed(1)} hrs`,
-              x: event.pageX,
-              y: event.pageY
-            }
-          });
-        })
-        .on("mouseout", () => {
-          this.setState({ tooltip: { ...this.state.tooltip, visible: false } });
-        });
+        .attr("fill", "#000");
     }
+
+    const legend = svg.append("g")
+      .attr("transform", `translate(${margin.left}, 40)`);
+
+    const legendItems = [
+      { label: "No Sleep Disorder", color: colors.None, type: "rect" },
+      { label: "Insomnia", color: colors.Insomnia, type: "rect" },
+      { label: "Sleep Apnea", color: colors["Sleep Apnea"], type: "rect" },
+      { label: "Avg Sleep Duration", color: "#000", type: "line" }
+    ];
+
+    const item = legend.selectAll("g")
+      .data(legendItems)
+      .enter()
+      .append("g")
+      .attr("transform", (d, i) => `translate(${i * 160}, 0)`);
+
+    item.filter(d => d.type === "rect")
+      .append("rect")
+      .attr("width", 14)
+      .attr("height", 14)
+      .attr("y", -10)
+      .attr("fill", d => d.color);
+
+    item.filter(d => d.type === "line")
+      .append("line")
+      .attr("x1", 0)
+      .attr("x2", 18)
+      .attr("y1", -3)
+      .attr("y2", -3)
+      .attr("stroke", "#000")
+      .attr("stroke-width", 3);
+
+    item.append("text")
+      .attr("x", 24)
+      .attr("y", 0)
+      .attr("font-size", "12px")
+      .attr("alignment-baseline", "middle")
+      .text(d => d.label);
   }
 
   render() {
-    const { showLine, tooltip } = this.state;
+    const { showLine } = this.state;
 
     return (
       <div style={{ position: "relative", overflow: "hidden" }}>
@@ -205,25 +215,7 @@ class StoryPoint1 extends Component {
             Show Sleep Duration Line
           </label>
         </div>
-
         <svg ref={this.svgRef}></svg>
-
-        {tooltip.visible && (
-          <div style={{
-            position: "absolute",
-            left: tooltip.x,
-            top: tooltip.y,
-            transform: "translate(10px, -30px)",
-            background: "rgba(0,0,0,0.85)",
-            color: "#fff",
-            padding: "8px",
-            borderRadius: "5px",
-            fontSize: "12px",
-            pointerEvents: "none"
-          }}>
-            {tooltip.text}
-          </div>
-        )}
       </div>
     );
   }
